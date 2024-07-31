@@ -14,7 +14,7 @@ Este projeto é uma API CRUD simples usando AWS Lambda, Python, DynamoDB e o Ser
 1. Clone o repositório:
 
     ```bash
-    git clone https://github.com/mlbsantos2018/api-spring-with-swagger-using-springdoc-openapi.git
+    git clone https://github.com/mlbsantos2018/iac-lambda-python-with-serverless-framework.git
     cd iac-lambda-python-with-serverless-framework
     ```
 
