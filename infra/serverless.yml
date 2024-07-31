@@ -1,0 +1,61 @@
+service: crud-api-lambda-python
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:*
+      Resource: "*"
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+functions:
+  create:
+    handler: src/handler_create.create
+    events:
+      - http:
+          path: items
+          method: post
+  read:
+    handler: src/handler_read.read
+    events:
+      - http:
+          path: items/{id}
+          method: get
+  update:
+    handler: src/handler_update.update
+    events:
+      - http:
+          path: items/{id}
+          method: put
+  delete:
+    handler: src/handler_delete.delete
+    events:
+      - http:
+          path: items/{id}
+          method: delete
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+resources:
+  Resources:
+    ItemsTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: "ItemsTable"
+        AttributeDefinitions:
+          - AttributeName: "id"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
